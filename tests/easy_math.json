@@ -1,0 +1,42 @@
+[
+    {
+        "id": "easy_001",
+        "title": "Distributivity",
+        "topic": "algebra",
+        "statement": "Prove that a*(b+c) = a*b + a*c for natural numbers",
+        "lean_theorem": "theorem distrib (a b c : ℕ) : a * (b + c) = a * b + a * c := by ring",
+        "difficulty": "easy"
+    },
+    {
+        "id": "easy_002",
+        "title": "And Elimination",
+        "topic": "logic",
+        "statement": "Prove that p ∧ q → p (conjunction elimination)",
+        "lean_theorem": "theorem and_elim_left (p q : Prop) (h : p ∧ q) : p := h.left",
+        "difficulty": "easy"
+    },
+    {
+        "id": "easy_003",
+        "title": "Power Derivative",
+        "topic": "calculus",
+        "statement": "The derivative of x^2 is 2x",
+        "lean_theorem": "example : deriv (fun x : ℝ => x^2) = fun x => 2*x := by ext x; simp [deriv_pow]",
+        "difficulty": "medium"
+    },
+    {
+        "id": "easy_004",
+        "title": "Intersection Commutativity",
+        "topic": "set_theory",
+        "statement": "Prove A ∩ B = B ∩ A (intersection is commutative)",
+        "lean_theorem": "theorem inter_comm (A B : Set α) : A ∩ B = B ∩ A := Set.inter_comm A B",
+        "difficulty": "easy"
+    },
+    {
+        "id": "easy_005",
+        "title": "Even Plus Two",
+        "topic": "number_theory",
+        "statement": "If n is even, then n+2 is even",
+        "lean_theorem": "theorem even_add_two (n : ℕ) (h : Even n) : Even (n + 2) := by omega",
+        "difficulty": "easy"
+    }
+]

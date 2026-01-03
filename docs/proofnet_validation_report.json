@@ -1,0 +1,66 @@
+[
+  {
+    "theorem_id": "proofnet_test_0",
+    "natural_language": "If $r$ is rational $(r \\neq 0)$ and $x$ is irrational, prove that $rx$ is irrational.",
+    "original_lean": "theorem exercise_1_1b\n(x : \u211d)\n(y : \u211a)\n(h : y \u2260 0)\n: ( irrational x ) -> irrational ( x * y ) :=",
+    "generated_lean": "import Mathlib.Data.Rat.Basic\nimport Mathlib.Data.Real.Basic\n\ntheorem irrational_mul_rational {r : \u211a} (hr : r \u2260 0) {x : \u211d} (hx : \u00ac \u2203 q : \u211a, q = x) : \u00ac \u2203 q : \u211a, q = r * x :=\nbegin\n  intro h,\n  cases h with q hq,\n  have : x = q / r := by\n  { rw hq,\n    rw [Rat.mul_eq_mul_div, Rat.div_eq_iff hr],\n    exact hr },\n  have : \u2203 q' : \u211a, q' = x := \u27e8q / r, this\u27e9,\n  exact hx this,\nend\n\n-- To use the theorem, you can state it as follows:\nexample (r : \u211a) (hr : r \u2260 0) (x : \u211d) (hx : \u00ac \u2203 q : \u211a, q = x) : \u00ac \u2203 q : \u211a, q = r * x :=\nirrational_mul_rational hr hx",
+    "verification_success": false,
+    "attempts": 2,
+    "errors": [
+      "The theorem contains a logical error in the proof. The line 'have : x = q / r' is incorrect because it assumes that 'q / r' is equal to 'x' without proper justification.",
+      "The use of 'Rat.mul_eq_mul_div' and 'Rat.div_eq_iff hr' is incorrect in this context. The division by 'r' should be handled differently."
+    ],
+    "time_seconds": 27.76784896850586
+  },
+  {
+    "theorem_id": "proofnet_test_1",
+    "natural_language": "Let $E$ be a nonempty subset of an ordered set; suppose $\\alpha$ is a lower bound of $E$ and $\\beta$ is an upper bound of $E$. Prove that $\\alpha \\leq \\beta$.",
+    "original_lean": "theorem exercise_1_4\n(\u03b1 : Type*) [partial_order \u03b1]\n(s : set \u03b1)\n(x y : \u03b1)\n(h\u2080 : set.nonempty s)\n(h\u2081 : x \u2208 lower_bounds s)\n(h\u2082 : y \u2208 upper_bounds s)\n: x \u2264 y :=",
+    "generated_lean": "import Mathlib.Order.Basic\n\n-- Define the theorem\ntheorem lower_bound_upper_bound {\u03b1 : Type*} [OrderedSemilattice \u03b1] {E : Set \u03b1} (hE : E.Nonempty)\n  (h\u03b1 : \u2200 x \u2208 E, \u03b1 \u2264 x) (\u03b2 : \u03b1) (h\u03b2 : \u2200 x \u2208 E, x \u2264 \u03b2) : \u03b1 \u2264 \u03b2 :=\nbegin\n  -- Since E is nonempty, we can choose an element from E\n  obtain \u27e8e, he\u27e9 := hE,\n  \n  -- By the definition of lower bound, we have \u03b1 \u2264 e\n  have h_le_e : \u03b1 \u2264 e := h\u03b1 e he,\n  \n  -- By the definition of upper bound, we have e \u2264 \u03b2\n  have h_e_le : e \u2264 \u03b2 := h\u03b2 e he,\n  \n  -- Now we can use transitivity to conclude \u03b1 \u2264 \u03b2\n  exact le_trans h_le_e h_e_le,\nend",
+    "verification_success": false,
+    "attempts": 2,
+    "errors": [
+      "The expression '\u03b1 \u2264 e' is incorrect. It should be 'e \u2265 \u03b1' or '\u03b1 \u2264 e' should be replaced with 'e \u2265 \u03b1' to match the context of lower bounds."
+    ],
+    "time_seconds": 24.909082889556885
+  },
+  {
+    "theorem_id": "proofnet_test_2",
+    "natural_language": "Prove that no order can be defined in the complex field that turns it into an ordered field.",
+    "original_lean": "theorem exercise_1_8 : \u00ac \u2203 (r : \u2102 \u2192 \u2102 \u2192 Prop), is_linear_order \u2102 r :=",
+    "generated_lean": "import Mathlib.Data.Complex.Basic\nimport Mathlib.Order.Field\n\n-- Theorem: No order can be defined in the complex field that turns it into an ordered field.\ntheorem complex_no_order : \u00ac \u2203 (r : \u211d \u2192 \u211d) (h : OrderedField r), \u2200 (z : \u2102), z \u2208 r (0) \u2192 z \u2265 0 :=\nbegin\n  -- Assume for contradiction that there exists an ordered field structure on \u2102.\n  rintro \u27e8r, h_ordered, h_ordered_field\u27e9,\n  \n  -- Consider the imaginary unit i.\n  let i : \u2102 := \u27e80, 1\u27e9, -- i = 0 + 1*i\n  \n  -- By the properties of ordered fields, we have two cases: either i \u2265 0 or i < 0.\n  by_cases h : i \u2265 0,\n  { -- Case 1: Assume i \u2265 0\n    -- Then, we can consider the square of i, which is -1.\n    have h_sq : i * i = -1, by simp,\n    -- Since i \u2265 0, we have i * i \u2265 0, which implies -1 \u2265 0.\n    have h_neg : -1 \u2265 0,\n    { rw h_sq,\n      exact h_ordered.mul_nonneg h h, },\n    -- This is a contradiction since -1 is not greater than or equal to 0.\n    exact lt_irrefl (-1) (h_ordered_field.neg_nonpos h_neg), },\n  \n  { -- Case 2: Assume i < 0\n    -- Then, we can consider the square of i, which is -1.\n    have h_sq : i * i = -1, by simp,\n    -- Since i < 0, we have i * i \u2265 0, which implies -1 \u2265 0.\n    have h_neg : -1 \u2265 0,\n    { rw h_sq,\n      exact h_ordered.mul_nonneg h h, },\n    -- This is again a contradiction since -1 is not greater than or equal to 0.\n    exact lt_irrefl (-1) (h_ordered_field.neg_nonpos h_neg), },\nend",
+    "verification_success": false,
+    "attempts": 2,
+    "errors": [
+      "The expression 'z \u2208 r (0)' is incorrect. 'r' is a function and should not be used with '\u2208'.",
+      "The use of 'h_ordered_field' is incorrect. It should be 'h_ordered' when referring to properties of the ordered field."
+    ],
+    "time_seconds": 26.836714029312134
+  },
+  {
+    "theorem_id": "proofnet_test_3",
+    "natural_language": "If $z_1, \\ldots, z_n$ are complex, prove that $|z_1 + z_2 + \\ldots + z_n| \\leq |z_1| + |z_2| + \\cdots + |z_n|$.",
+    "original_lean": "theorem exercise_1_12 (n : \u2115) (f : \u2115 \u2192 \u2102) : \n  abs (\u2211 i in finset.range n, f i) \u2264 \u2211 i in finset.range n, abs (f i) :=",
+    "generated_lean": "import Mathlib.Data.Complex.Basic\nimport Mathlib.Analysis.NormedSpace.Basic\n\nopen Complex\n\ntheorem triangle_inequality (z : List \u2102) : \n  abs (z.foldl (+) 0) \u2264 z.foldl (fun acc z => abs z + acc) 0 := \nbegin\n  induction z with hd tl ih,\n  { -- Base case: empty list\n    simp only [List.foldl, List.sum_nil, Complex.norm_zero, zero_le_zero] },\n  { -- Inductive step\n    simp only [List.foldl, List.sum_cons, Complex.norm_add, ih],\n    exact norm_add_le _ _,\n  }\nend",
+    "verification_success": false,
+    "attempts": 2,
+    "errors": [
+      "The theorem statement uses 'abs' which is not defined for complex numbers in this context. It should use 'norm' instead.",
+      "The base case uses 'Complex.norm_zero' which is incorrect; it should be 'norm 0 = 0'."
+    ],
+    "time_seconds": 18.798763036727905
+  },
+  {
+    "theorem_id": "proofnet_test_4",
+    "natural_language": "If $z$ is a complex number such that $|z|=1$, that is, such that $z \\bar{z}=1$, compute $|1+z|^{2}+|1-z|^{2}$.",
+    "original_lean": "theorem exercise_1_14\n  (z : \u2102) (h : abs z = 1)\n  : (abs (1 + z)) ^ 2 + (abs (1 - z)) ^ 2 = 4 :=",
+    "generated_lean": "import analysis.complex.basic\n\nopen complex\n\n-- Theorem: If z is a complex number such that |z| = 1, compute |1 + z|^2 + |1 - z|^2.\ntheorem complex_modulus_sum (z : \u2102) (hz : |z| = 1) : |1 + z|^2 + |1 - z|^2 = 4 :=\nbegin\n  -- Start by expressing |1 + z|^2 and |1 - z|^2 in terms of z and its conjugate.\n  have h1 : |1 + z|^2 = (1 + z) * (1 + z.conj),\n  { rw [norm_sq_eq_mul_conj, add_comm], },\n  \n  have h2 : |1 - z|^2 = (1 - z) * (1 - z.conj),\n  { rw [norm_sq_eq_mul_conj, add_comm], },\n\n  -- Now we compute |1 + z|^2 + |1 - z|^2.\n  calc\n    |1 + z|^2 + |1 - z|^2 = (1 + z) * (1 + z.conj) + (1 - z) * (1 - z.conj) : by rw [h1, h2]\n    ... = (1 + z)(1 + z.conj) + (1 - z)(1 - z.conj) : rfl\n    ... = (1 + z)(1 + z.conj) + (1 - z)(1 - z.conj) : rfl\n    ... = (1 + z)(1 + z.conj) + (1 - z)(1 - z.conj) : rfl\n    ... = 1 + z + z.conj + z * z.conj + 1 - z - z.conj + z * z.conj : by ring\n    ... = 2 + 2 * (z * z.conj) : by ring\n    ... = 2 + 2 * 1 : by rw [hz]\n    ... = 4 : by ring,\nend",
+    "verification_success": false,
+    "attempts": 2,
+    "errors": [
+      "The tactic 'rw [norm_sq_eq_mul_conj, add_comm]' is incorrect because 'add_comm' is not needed in this context.",
+      "The expression 'z * z.conj' should be simplified to '1' directly using the property of complex numbers with unit modulus."
+    ],
+    "time_seconds": 27.536302089691162
+  }
+]

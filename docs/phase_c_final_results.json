@@ -1,0 +1,179 @@
+{
+  "verification_rate": 0.0,
+  "misconception_hit_rate": 1.0,
+  "verification_results": [
+    {
+      "problem_id": "aime_2025_1",
+      "success": false,
+      "attempts": 3,
+      "final_code": "import Std.Data.Nat\n\n-- Define a function to check if a number is prime\ndef isPrime (n : Nat) : Bool :=\n  if n < 2 then false\n  else\n    let rec check (d : Nat) : Bool :=\n      if d * d > n then true\n      else if n % d == 0 then false\n      else check (d + 1)\n    check 2\n\n-- Define the prime lattice points in the range [0, 10]\ndef primePoints : List (Nat \u00d7 Nat) :=\n  [(2, 3), (2, 5), (2, 7), (3, 2), (3, 3), (3, 5), (3, 7),\n   (5, 2), (5, 3), (5, 5), (5, 7), (7, 2), (7, 3), (7, 5), (7, 7)]\n\n-- Define a factorial function\ndef fact : Nat \u2192 Nat\n| 0 => 1\n| n + 1 => (n + 1) * fact n\n\n-- Function to compute binomial coefficients\ndef binom (n k : Nat) : Nat :=\n  if k > n then 0\n  else fact n / (fact k * fact (n - k))\n\n-- Theorem: The number of lattice paths from (0,0) to (10,10) that pass through exactly 3 prime lattice points\ntheorem latticePaths",
+      "errors": [],
+      "compilation_output": "/var/folders/q6/0pfb75k55856k8_ms3tldx240000gn/T/tmpkh4px3xk.lean:1:0: error: object file '/Users/rahul/.elan/toolchains/leanprover--lean4---v4.26.0/lib/lean/Std/Data/Nat.olean' of module Std.Data.Nat does not exist\n"
+    },
+    {
+      "problem_id": "aime_2025_2",
+      "success": false,
+      "attempts": 3,
+      "final_code": "import Nat\n\n-- Define the theorem for the area of triangle ABD given the conditions of the problem\ntheorem area_of_triangle_ABD : \n  let BD := 7\n      DC := 5\n      inradius := 3\n      s := (BD + DC + (BD + DC)) / 2 -- semi-perimeter\n      area := inradius * s -- area formula for triangle with inradius\n  in area = 21 := \n  by\n    -- The area calculation\n    let s := (BD + DC + (BD + DC)) / 2\n    let area := inradius * s\n    -- Show that area equals 21\n    have h : area = 21 := by\n      -- Calculate s\n      let s := (7 + 5 + (7 + 5)) / 2\n      -- Simplify s\n      calc\n        s = (7 + 5 + 12) / 2 : rfl\n        ... = 24 / 2 : rfl\n        ... = 12 : Nat.div_eq_of_eq_mul_left (by norm_num)\n    -- Now calculate the area\n    calc\n      area = inradius * s : rfl\n      ... = 3 * 12 : by rw [h]\n      ... = 36 : Nat.mul_comm 3 12\n      ... = 21 : by norm_num\n    sorry",
+      "errors": [],
+      "compilation_output": "/var/folders/q6/0pfb75k55856k8_ms3tldx240000gn/T/tmpajmp9vx0.lean:1:0: error: unknown module prefix 'Nat'\n\nNo directory 'Nat' or file 'Nat.olean' in the search path entries:\n/Users/rahul/.elan/toolchains/leanprover--lean4---v4.26.0/lib/lean\n"
+    },
+    {
+      "problem_id": "aime_2025_3",
+      "success": false,
+      "attempts": 3,
+      "final_code": "import Std.Data.Nat\n\ntheorem gcd_condition (n : Nat) : \n  (1 \u2264 n \u2227 n \u2264 2025) \u2192 (Nat.gcd n 2025 = Nat.gcd (n + 1) 2025) \u2192 \n  \u2203 (k : Nat), (1 \u2264 k \u2227 k \u2264 2025) \u2227 Nat.gcd k 2025 = Nat.gcd (k + 1) 2025 := \n  by\n  intro h1 h2\n  -- The proof will be filled in later\n  sorry",
+      "errors": [],
+      "compilation_output": "/var/folders/q6/0pfb75k55856k8_ms3tldx240000gn/T/tmp2iowprwt.lean:1:0: error: object file '/Users/rahul/.elan/toolchains/leanprover--lean4---v4.26.0/lib/lean/Std/Data/Nat.olean' of module Std.Data.Nat does not exist\n"
+    },
+    {
+      "problem_id": "aime_2025_4",
+      "success": false,
+      "attempts": 3,
+      "final_code": "import Std.Data.Nat\n\n-- Define \u03c0 as a rational number for the sake of this example\ndef \u03c0 : Rat := Rat.ofInt 314159 / Rat.ofInt 100000  -- Approximation of \u03c0\n\n-- Define the theorem for the surface area of the inscribed sphere in a regular tetrahedron\ntheorem inscribed_sphere_surface_area : Rat :=\n  let edge_length : Nat := 6\n  let radius : Rat := Rat.ofNat edge_length / (2 * Rat.ofNat (Nat.sqrt 6)) -- Correct radius formula\n  let surface_area : Rat := 4 * \u03c0 * radius * radius -- Surface area formula for a sphere\n  surface_area\n\n-- The proof is left as an exercise\nexample : inscribed_sphere_surface_area = Rat.ofInt 36 * \u03c0 := \n  sorry",
+      "errors": [],
+      "compilation_output": "/var/folders/q6/0pfb75k55856k8_ms3tldx240000gn/T/tmp1dg35t4s.lean:1:0: error: object file '/Users/rahul/.elan/toolchains/leanprover--lean4---v4.26.0/lib/lean/Std/Data/Nat.olean' of module Std.Data.Nat does not exist\n"
+    },
+    {
+      "problem_id": "aime_2025_5",
+      "success": false,
+      "attempts": 3,
+      "final_code": "import Std.Data.Nat\n\ntheorem count_cubic_differences : \n  \u2203 n : \u2115, n < 10000 \u2227 (n \u2208 {x | \u2203 a b : \u2115, x = a^3 - b^3}) := \n  let cubic_differences := {x | \u2203 a b : \u2115, x = a^3 - b^3}\n  let max_n := 10000\n  let valid_n := {n | n < max_n \u2227 n \u2208 cubic_differences}\n  let n := 1  -- You can choose any valid n here for the sake of the proof\n  have h1 : n < max_n := Nat.lt_of_le_of_lt (Nat.zero_le n) (Nat.lt_succ_self max_n)\n  have h2 : n \u2208 cubic_differences := by\n    use (1 : \u2115), (0 : \u2115)  -- Example: 1^3 - 0^3 = 1\n    rfl\n  exact \u27e8n, h1, h2\u27e9",
+      "errors": [],
+      "compilation_output": "/var/folders/q6/0pfb75k55856k8_ms3tldx240000gn/T/tmpy48jzwiq.lean:1:0: error: object file '/Users/rahul/.elan/toolchains/leanprover--lean4---v4.26.0/lib/lean/Std/Data/Nat.olean' of module Std.Data.Nat does not exist\n"
+    }
+  ],
+  "mcqs": [
+    {
+      "question": "How many lattice paths from (0,0) to (10,10) pass through exactly 3 lattice points with both coordinates prime?",
+      "options": {
+        "A": "252",
+        "B": "5040",
+        "C": "120",
+        "D": "210"
+      },
+      "correct_answer": "A",
+      "distractors": [
+        {
+          "option": "B",
+          "misconception_logic": "Student error: Misunderstanding the problem as requiring permutations of steps rather than combinations of paths through prime points, leading to an overcounting of arrangements."
+        },
+        {
+          "option": "C",
+          "misconception_logic": "Student error: Confusing the selection of prime points as a combination problem but incorrectly applying nPr instead of nCr, resulting in an incorrect calculation."
+        },
+        {
+          "option": "D",
+          "misconception_logic": "Student error: Incorrectly calculating the total paths by treating the selection of prime points as a sequential arrangement, failing to recognize the need for combinations."
+        }
+      ],
+      "topic": "combinatorics",
+      "misconceptions_used": true
+    },
+    {
+      "question": "In triangle ABC, the incircle touches BC at D. If BD = 7, DC = 5, and the inradius is 3, what is the area of triangle ABD?",
+      "options": {
+        "A": "21",
+        "B": "12",
+        "C": "15",
+        "D": "30"
+      },
+      "correct_answer": "A",
+      "distractors": [
+        {
+          "option": "B",
+          "misconception_logic": "Student error: Believes that the area can be calculated using only the lengths of BD and DC without considering the height from A to line BC."
+        },
+        {
+          "option": "C",
+          "misconception_logic": "Student error: Incorrectly assumes that the area of triangle ABD is directly proportional to the lengths of BD and DC, neglecting the inradius."
+        },
+        {
+          "option": "D",
+          "misconception_logic": "Student error: Misunderstands the relationship between the inradius and the area, thinking that the area is simply the product of the inradius and the sum of the segments BD and DC."
+        }
+      ],
+      "topic": "geometry",
+      "misconceptions_used": true
+    },
+    {
+      "question": "How many integers n with 1 \u2264 n \u2264 2025 satisfy gcd(n, 2025) = gcd(n+1, 2025)?",
+      "options": {
+        "A": "675",
+        "B": "1012",
+        "C": "2025",
+        "D": "0"
+      },
+      "correct_answer": "A",
+      "distractors": [
+        {
+          "option": "B",
+          "misconception_logic": "Student error: Believes that since gcd(n, 2025) and gcd(n+1, 2025) can be manipulated like modular arithmetic, they can simply divide the counts of integers without considering the actual gcd properties."
+        },
+        {
+          "option": "C",
+          "misconception_logic": "Student error: Assumes that all integers in the range contribute equally to the gcd condition without recognizing the specific divisors of 2025."
+        },
+        {
+          "option": "D",
+          "misconception_logic": "Student error: Incorrectly concludes that there are no integers satisfying the condition based on a misunderstanding of how gcd behaves with consecutive integers."
+        }
+      ],
+      "topic": "number_theory",
+      "misconceptions_used": true
+    },
+    {
+      "question": "A sphere is inscribed in a regular tetrahedron with edge length 6. What is the surface area of the sphere?",
+      "options": {
+        "A": "36\u03c0",
+        "B": "72\u03c0",
+        "C": "18\u03c0",
+        "D": "12\u03c0"
+      },
+      "correct_answer": "A",
+      "distractors": [
+        {
+          "option": "B",
+          "misconception_logic": "Student error: Misunderstanding the relationship between the radius of the inscribed sphere and the tetrahedron's dimensions, leading them to incorrectly calculate the surface area as if it were directly proportional to the edge length."
+        },
+        {
+          "option": "C",
+          "misconception_logic": "Student error: Confusing the formula for the surface area of a sphere with that of a circle, resulting in an incorrect calculation based on an incorrect radius."
+        },
+        {
+          "option": "D",
+          "misconception_logic": "Student error: Believing that the inscribed angle of the tetrahedron directly translates to the radius of the sphere, leading to an incorrect calculation of the sphere's surface area."
+        }
+      ],
+      "topic": "geometry",
+      "misconceptions_used": true
+    },
+    {
+      "question": "How many positive integers less than 10000 can be expressed as the difference of two perfect cubes?",
+      "options": {
+        "A": "9999",
+        "B": "5000",
+        "C": "3333",
+        "D": "2500"
+      },
+      "correct_answer": "A",
+      "distractors": [
+        {
+          "option": "B",
+          "misconception_logic": "Student error: Believes that the average of the maximum and minimum possible differences leads to the total count without considering the actual values of perfect cubes."
+        },
+        {
+          "option": "C",
+          "misconception_logic": "Student error: Assumes that since cubes grow quickly, only a third of the numbers can be expressed as differences, misapplying the concept of density in number theory."
+        },
+        {
+          "option": "D",
+          "misconception_logic": "Student error: Incorrectly applies modular arithmetic, thinking that since 6/2 \u2261 3 (mod 4), it implies a similar simplification for counting differences of cubes without checking the necessary conditions."
+        }
+      ],
+      "topic": "number_theory",
+      "misconceptions_used": true
+    }
+  ],
+  "top_errors": []
+}

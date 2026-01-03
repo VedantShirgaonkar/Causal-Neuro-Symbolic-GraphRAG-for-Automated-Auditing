@@ -1,0 +1,30 @@
+{
+    "id": "bridge_001",
+    "title": "Cross-Domain: Work and Line Integrals",
+    "question": "A force field F = (2xy, x²) acts on a particle moving along the path C from (0,0) to (1,1), where C is the curve y = x². Calculate the work done.",
+    "domain_requirements": {
+        "physics": "Work done by variable force (W = ∫F·dr)",
+        "calculus": "Line integrals and parameterization"
+    },
+    "expected_sources": [
+        "University_Physics_Volume_1",
+        "MIT_Calculus"
+    ],
+    "expected_concepts": [
+        "Work-Energy Theorem",
+        "Work done by variable force",
+        "Line Integrals",
+        "Vector Fields",
+        "Parameterization"
+    ],
+    "correct_answer": "1",
+    "solution_outline": [
+        "1. Parameterize the curve: x = t, y = t², where t ∈ [0,1]",
+        "2. Compute dr = (dx, dy) = (dt, 2t dt)",
+        "3. Substitute into F: F(t) = (2t·t², t²) = (2t³, t²)",
+        "4. Compute F·dr = 2t³·dt + t²·2t·dt = 2t³ dt + 2t³ dt = 4t³ dt",
+        "5. Integrate: W = ∫₀¹ 4t³ dt = [t⁴]₀¹ = 1"
+    ],
+    "difficulty": "hard",
+    "type": "cross_domain"
+}

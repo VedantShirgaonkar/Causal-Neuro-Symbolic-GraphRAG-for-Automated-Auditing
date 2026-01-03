@@ -1,0 +1,79 @@
+{
+  "pass_rate": 0.0,
+  "total": 5,
+  "success": 0,
+  "semantic_errors": 0,
+  "system_errors": 5,
+  "results": [
+    {
+      "problem_id": "AIME_2025_Prob_1",
+      "problem_type": "combinatorics",
+      "success": false,
+      "attempts": 3,
+      "lean_file_path": "",
+      "final_code": "/-\n  AIME 2025 Problem: AIME_2025_Prob_1\n  Type: combinatorics\n  MathemaTest Formal Verification\n-/\n\nimport Mathlib.Tactic\nimport Mathlib.NumberTheory.Basic\nimport Mathlib.Algebra.BigOperators.Basic\nimport Mathlib.Data.Nat.Basic\nimport Mathlib.Data.Int.Basic\nimport Mathlib.Data.Real.Basic\n\nopen Nat Int Real\n\ntheorem aime_2025_problem_X : \n  let prime_points := { (2, 3), (2, 5), (3, 2), (3, 3), (5, 2), (5, 3), (7, 2), (7, 3) } in\n  Finset.card prime_points = 8 \u2192 \n  (\u2203 paths : \u2115, paths = Nat.choose 10 3 * Nat.choose (10 - 3) 3) := by\n  use Nat.choose 10 3 * Nat.choose (10 - 3) 3\n  rfl",
+      "errors": [
+        "error: no such file or directory (error code: 2)",
+        "error: Mathematest/Verification/Temp_110d48c8.lean: bad import 'Mathlib.Algebra.BigOperators.Basic'",
+        "error: build failed"
+      ],
+      "error_classification": "system"
+    },
+    {
+      "problem_id": "AIME_2025_Prob_2",
+      "problem_type": "geometry",
+      "success": false,
+      "attempts": 3,
+      "lean_file_path": "",
+      "final_code": "/-\n  AIME 2025 Problem: AIME_2025_Prob_2\n  Type: geometry\n  MathemaTest Formal Verification\n-/\n\nimport Mathlib.Tactic\nimport Mathlib.NumberTheory.Basic\nimport Mathlib.Algebra.BigOperators.Basic\nimport Mathlib.Data.Nat.Basic\nimport Mathlib.Data.Int.Basic\nimport Mathlib.Data.Real.Basic\n\nopen Nat Int Real\n\ntheorem aime_2025_problem_X : let s := 7 + 5 + 3 in\n  let area_ABD := (7 * 3) / 2 in\n  area_ABD = 30 := by\n  rfl",
+      "errors": [
+        "error: no such file or directory (error code: 2)",
+        "error: Mathematest/Verification/Temp_0cd4cd96.lean: bad import 'Mathlib.Algebra.BigOperators.Basic'",
+        "error: build failed"
+      ],
+      "error_classification": "system"
+    },
+    {
+      "problem_id": "AIME_2025_Prob_3",
+      "problem_type": "number_theory",
+      "success": false,
+      "attempts": 3,
+      "lean_file_path": "",
+      "final_code": "/-\n  AIME 2025 Problem: AIME_2025_Prob_3\n  Type: number_theory\n  MathemaTest Formal Verification\n-/\n\nimport Mathlib.Tactic\nimport Mathlib.NumberTheory.Basic\nimport Mathlib.Algebra.BigOperators.Basic\nimport Mathlib.Data.Nat.Basic\nimport Mathlib.Data.Int.Basic\nimport Mathlib.Data.Real.Basic\n\nopen Nat Int Real\n\ntheorem aime_2025_problem_X : \u2203 k : \u2115, k \u2264 2025 \u2227 (Nat.gcd k 2025 = Nat.gcd (k + 1) 2025) := by\n  use 2024\n  constructor\n  exact Nat.le_refl 2024\n  have h : Nat.gcd 2024 2025 = Nat.gcd 2025 2025 := by\n    simp [Nat.gcd, Nat.gcd_eq_right_iff]\n    exact Nat.succ_le_iff.mp (Nat.le_refl 2024)\n  exact h",
+      "errors": [
+        "error: no such file or directory (error code: 2)",
+        "error: Mathematest/Verification/Temp_070379d1.lean: bad import 'Mathlib.Algebra.BigOperators.Basic'",
+        "error: build failed"
+      ],
+      "error_classification": "system"
+    },
+    {
+      "problem_id": "AIME_2025_Prob_4",
+      "problem_type": "geometry",
+      "success": false,
+      "attempts": 3,
+      "lean_file_path": "",
+      "final_code": "/-\n  AIME 2025 Problem: AIME_2025_Prob_4\n  Type: geometry\n  MathemaTest Formal Verification\n-/\n\nimport Mathlib.Tactic\nimport Mathlib.NumberTheory.Basic\nimport Mathlib.Algebra.BigOperators.Basic\nimport Mathlib.Data.Nat.Basic\nimport Mathlib.Data.Int.Basic\nimport Mathlib.Data.Real.Basic\n\nopen Nat Int Real\n\ntheorem aime_2025_problem_1 : let r := 3 * sqrt (6 / 5) in\n  (4 * \u03c0 * r^2) = (4 * \u03c0 * (3 * sqrt (6 / 5))^2) := by\n  rw [\u2190mul_assoc, \u2190mul_assoc, mul_comm (4 * \u03c0), mul_comm ((3 * sqrt (6 / 5))^2)]\n  rfl",
+      "errors": [
+        "error: no such file or directory (error code: 2)",
+        "error: Mathematest/Verification/Temp_82e78a4a.lean: bad import 'Mathlib.Algebra.BigOperators.Basic'",
+        "error: build failed"
+      ],
+      "error_classification": "system"
+    },
+    {
+      "problem_id": "AIME_2025_Prob_5",
+      "problem_type": "number_theory",
+      "success": false,
+      "attempts": 3,
+      "lean_file_path": "",
+      "final_code": "/-\n  AIME 2025 Problem: AIME_2025_Prob_5\n  Type: number_theory\n  MathemaTest Formal Verification\n-/\n\nimport Mathlib.Tactic\nimport Mathlib.NumberTheory.Basic\nimport Mathlib.Algebra.BigOperators.Basic\nimport Mathlib.Data.Nat.Basic\nimport Mathlib.Data.Int.Basic\nimport Mathlib.Data.Real.Basic\n\nopen Nat Int Real\n\ntheorem aime_2025_problem_X : \u2203 n : \u2115, n < 10000 \u2227 \u2203 a b : \u2115, n = a^3 - b^3 := by\n  use 0\n  constructor\n  \u00b7 simp\n  \u00b7 use 1, 1\n    simp [Nat.pow_sub_pow]",
+      "errors": [
+        "error: no such file or directory (error code: 2)",
+        "error: Mathematest/Verification/Temp_20252086.lean: bad import 'Mathlib.Algebra.BigOperators.Basic'",
+        "error: build failed"
+      ],
+      "error_classification": "system"
+    }
+  ]
+}

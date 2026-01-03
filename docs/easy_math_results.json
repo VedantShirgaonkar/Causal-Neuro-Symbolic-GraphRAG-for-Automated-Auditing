@@ -1,0 +1,50 @@
+{
+  "pass_rate": 0.8,
+  "passed": 4,
+  "total": 5,
+  "results": [
+    {
+      "id": "easy_001",
+      "title": "Distributivity",
+      "topic": "algebra",
+      "success": true,
+      "output": "\u26a0 [3058/3058] Built Mathematest.Verification.Temp_542e2b75 (88s)\nwarning: Mathematest/Verification/Temp_542e2b75.lean:12:68: '' starts on column 68, but all commands should start at the beginning of t",
+      "errors": []
+    },
+    {
+      "id": "easy_002",
+      "title": "And Elimination",
+      "topic": "logic",
+      "success": true,
+      "output": "\u26a0 [3058/3058] Built Mathematest.Verification.Temp_614c627e (88s)\nwarning: Mathematest/Verification/Temp_614c627e.lean:12:60: '' starts on column 60, but all commands should start at the beginning of t",
+      "errors": []
+    },
+    {
+      "id": "easy_003",
+      "title": "Power Derivative",
+      "topic": "calculus",
+      "success": true,
+      "output": "\u26a0 [3058/3058] Built Mathematest.Verification.Temp_abbdcc8e (82s)\nwarning: Mathematest/Verification/Temp_abbdcc8e.lean:12:69: This simp argument is unused:\n  deriv_pow\n\nHint: Omit it from the simp argu",
+      "errors": []
+    },
+    {
+      "id": "easy_004",
+      "title": "Intersection Commutativity",
+      "topic": "set_theory",
+      "success": true,
+      "output": "\u26a0 [3058/3058] Built Mathematest.Verification.Temp_e7944aea (79s)\nwarning: Mathematest/Verification/Temp_e7944aea.lean:12:70: '' starts on column 70, but all commands should start at the beginning of t",
+      "errors": []
+    },
+    {
+      "id": "easy_005",
+      "title": "Even Plus Two",
+      "topic": "number_theory",
+      "success": false,
+      "output": "\u2716 [3058/3058] Building Mathematest.Verification.Temp_085c8734 (81s)\ntrace: .> LEAN_PATH=/Users/rahul/Desktop/MATHEMATEST/mathematest/.lake/packages/Cli/.lake/build/lib/lean:/Users/rahul/Desktop/MATHEM",
+      "errors": [
+        "error: Mathematest/Verification/Temp_085c8734.lean:12:63: omega could not prove the goal:",
+        "error: Lean exited with code 1"
+      ]
+    }
+  ]
+}

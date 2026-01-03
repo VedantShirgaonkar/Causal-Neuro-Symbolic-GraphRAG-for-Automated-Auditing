@@ -1,0 +1,164 @@
+{
+  "problem": {
+    "id": "bridge_001",
+    "title": "Cross-Domain: Work and Line Integrals",
+    "question": "A force field F = (2xy, x\u00b2) acts on a particle moving along the path C from (0,0) to (1,1), where C is the curve y = x\u00b2. Calculate the work done.",
+    "domain_requirements": {
+      "physics": "Work done by variable force (W = \u222bF\u00b7dr)",
+      "calculus": "Line integrals and parameterization"
+    },
+    "expected_sources": [
+      "University_Physics_Volume_1",
+      "MIT_Calculus"
+    ],
+    "expected_concepts": [
+      "Work-Energy Theorem",
+      "Work done by variable force",
+      "Line Integrals",
+      "Vector Fields",
+      "Parameterization"
+    ],
+    "correct_answer": "1",
+    "solution_outline": [
+      "1. Parameterize the curve: x = t, y = t\u00b2, where t \u2208 [0,1]",
+      "2. Compute dr = (dx, dy) = (dt, 2t dt)",
+      "3. Substitute into F: F(t) = (2t\u00b7t\u00b2, t\u00b2) = (2t\u00b3, t\u00b2)",
+      "4. Compute F\u00b7dr = 2t\u00b3\u00b7dt + t\u00b2\u00b72t\u00b7dt = 2t\u00b3 dt + 2t\u00b3 dt = 4t\u00b3 dt",
+      "5. Integrate: W = \u222b\u2080\u00b9 4t\u00b3 dt = [t\u2074]\u2080\u00b9 = 1"
+    ],
+    "difficulty": "hard",
+    "type": "cross_domain"
+  },
+  "trace": {
+    "physics_nodes": [
+      {
+        "id": "299b22730f621ee6",
+        "source_id": "University_Physics_Volume_1_-_WEB",
+        "source_type": "vector",
+        "score": 1.4029183387756348,
+        "content_preview": "8.4 Potential Energy Diagrams and Stability\n45. A mysterious constant force of 10 N acts\nhorizontall...",
+        "domain": "physics"
+      },
+      {
+        "id": "f0bd52cad8fc32f5",
+        "source_id": "University_Physics_Volume_1_-_WEB",
+        "source_type": "vector",
+        "score": 1.1565217971801758,
+        "content_preview": "73. A mysterious force acts on all particles along a\nparticular line and always points towards a\npar...",
+        "domain": "physics"
+      },
+      {
+        "id": "a6cd447bfdc44513",
+        "source_id": "University_Physics_Volume_1_-_WEB",
+        "source_type": "vector",
+        "score": -1.006943702697754,
+        "content_preview": "is decreased. The same horizontal force is\napplied to the crate, and after being pushed 8.0\nm, its s...",
+        "domain": "physics"
+      },
+      {
+        "id": "dbe9c937d5aa1da8",
+        "source_id": "mit_calculus_lec_week8",
+        "source_type": "vector",
+        "score": -1.2147471904754639,
+        "content_preview": "Z \nR \nR \nR \nR \nR \n4 \nrf d~r = f(P1) \u2212 f(P0) when C runs from P0 to P1.\n\u00b7 \nC \nZ\nZ \nEquivalently with ...",
+        "domain": "physics"
+      },
+      {
+        "id": "cbb9f54c88d90f43",
+        "source_id": "University_Physics_Volume_1_-_WEB",
+        "source_type": "vector",
+        "score": -1.7184926271438599,
+        "content_preview": "Let\u2019s look at a specific example, choosing zero potential energy for gravitational potential energy ...",
+        "domain": "physics"
+      },
+      {
+        "id": "675cb81899b45d50",
+        "source_id": "University_Physics_Volume_1_-_WEB",
+        "source_type": "vector",
+        "score": -2.084169387817383,
+        "content_preview": "7.1 Work\nLEARNING OBJECTIVES\nBy the end of this section, you will be able to:\n\u2022\nRepresent the work d...",
+        "domain": "physics"
+      },
+      {
+        "id": "8f8b3244de125404",
+        "source_id": "University_Physics_Volume_1_-_WEB",
+        "source_type": "vector",
+        "score": -2.2986342906951904,
+        "content_preview": "Figure 7.3(b) shows a person holding a briefcase. The person must exert an upward force, equal in ma...",
+        "domain": "physics"
+      },
+      {
+        "id": "2b6a5b2836a25ee7",
+        "source_id": "University_Physics_Volume_1_-_WEB",
+        "source_type": "vector",
+        "score": -2.3514795303344727,
+        "content_preview": "holds out a net to catch the pebble. (a) How\nmuch work is done on the pebble by gravity\nduring the d...",
+        "domain": "physics"
+      },
+      {
+        "id": "37181b19728aef89",
+        "source_id": "University_Physics_Volume_1_-_WEB",
+        "source_type": "vector",
+        "score": -2.567075252532959,
+        "content_preview": "How much instantaneous power does she exert\nat\n?\n82. A typical automobile engine has an efficiency o...",
+        "domain": "physics"
+      },
+      {
+        "id": "b3dde5a573789b56",
+        "source_id": "University_Physics_Volume_1_-_WEB",
+        "source_type": "vector",
+        "score": -2.6439473628997803,
+        "content_preview": "CHECK YOUR UNDERSTANDING 7.2\nCan Earth\u2019s gravity ever be a constant force for all paths?\nWork Done b...",
+        "domain": "physics"
+      },
+      {
+        "id": "8f19cf997c287f2d",
+        "source_id": "University_Physics_Volume_1_-_WEB",
+        "source_type": "vector",
+        "score": -2.74017596244812,
+        "content_preview": "Chapter Review\nKey Terms\nconservative force\nforce that does work independent\nof path\nconserved quant...",
+        "domain": "physics"
+      },
+      {
+        "id": "860a5558f3ec3209",
+        "source_id": "University_Physics_Volume_1_-_WEB",
+        "source_type": "vector",
+        "score": -2.7716472148895264,
+        "content_preview": "16. Two forces act to double the speed of a particle,\ninitially moving with kinetic energy of 1 J. O...",
+        "domain": "physics"
+      },
+      {
+        "id": "0aaed9707e3ec2ee",
+        "source_id": "University_Physics_Volume_1_-_WEB",
+        "source_type": "vector",
+        "score": -2.878964424133301,
+        "content_preview": "Strategy\nApply the condition stated in Equation 8.10, namely, using the derivatives of the component...",
+        "domain": "physics"
+      }
+    ],
+    "calculus_nodes": [
+      {
+        "id": "4fd6d5584c784e74",
+        "source_id": "mit_calculus_lec_week8",
+        "source_type": "vector",
+        "score": -1.4039167165756226,
+        "content_preview": "Z \n  \n! \nX \nR \n2 \nR 1\nintegral is v . The \ufb01rst slice is v = 0, the last is v = 1; so we get \nZ 1 Z 1...",
+        "domain": "calculus"
+      },
+      {
+        "id": "443b4daefebce1c0",
+        "source_id": "mit_calculus_lec_week13",
+        "source_type": "vector",
+        "score": -1.7494343519210815,
+        "content_preview": "R \nR \n18.02 Lecture 30.\n \u2013  Tue, Nov 27, 2007 \nHandouts: practice exams 4A and 4B. \nClari\ufb01cation fro...",
+        "domain": "calculus"
+      }
+    ],
+    "other_nodes": [],
+    "total": 15,
+    "has_physics": true,
+    "has_calculus": true,
+    "verified": true
+  },
+  "generated_at": "2026-01-02T19:29:38.379529"
+}

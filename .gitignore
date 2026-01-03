@@ -1,0 +1,78 @@
+# ===========================================
+# MathemaTest .gitignore - Production Release
+# ===========================================
+
+# =====================
+# 1. SECRETS (CRITICAL)
+# =====================
+.env
+.env.local
+.env.production
+config.yaml
+secrets.yaml
+*.pem
+*.key
+
+# =====================
+# 2. PYTHON ARTIFACTS
+# =====================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+dist/
+build/
+venv/
+.venv/
+env/
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# =====================
+# 3. LEAN 4 ARTIFACTS (Large Binaries)
+# =====================
+mathematest/.lake/
+mathematest/lake-packages/
+mathematest/build/
+*.olean
+.elan/
+
+# =====================
+# 4. PROJECT ARTIFACTS
+# =====================
+artifacts/
+logs/
+data/
+*_output/
+ingestion_results.json
+*.log
+
+# =====================
+# 5. IDE & SYSTEM FILES
+# =====================
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+Thumbs.db
+
+# =====================
+# 6. JUPYTER & NOTEBOOKS
+# =====================
+.ipynb_checkpoints/
+*.ipynb
+
+# =====================
+# 7. TEMPORARY FILES
+# =====================
+*.tmp
+*.temp
+*.bak

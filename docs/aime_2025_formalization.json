@@ -1,0 +1,50 @@
+{
+  "lean_available": false,
+  "problems": [
+    {
+      "id": "aime_2025_1",
+      "type": "combinatorics",
+      "formalized": true,
+      "lean_code": "import Mathlib\n\nopen Nat\n\ndef is_prime (n : \u2115) : Prop :=\n  n > 1 \u2227 \u2200 d : \u2115, d \u2223 n \u2192 d = 1 \u2228 d = n\n\ndef prime_points : Set (\u2115 \u00d7 \u2115) :=\n  { (x, y) | is_prime x \u2227 is_prime y }\n\ntheorem lattice_paths_through_primes : \n  let total_paths := 184756 -- Total paths from (0,0) to (10,10) is C(20,10)\n  let prime_coords := [(2, 3), (3, 2), (5, 5), (7, 11), (11, 7)] -- Example prime coordinates\n  let valid_paths := prime_coords.filter (\u03bb p, p.1 \u2264 10 \u2227 p.2 \u2264 10).length\n  in valid_paths = 3 \u2192 total_paths = 0 := by\n  -- Placeholder for the proof\n  sorry",
+      "verified": false,
+      "errors": []
+    },
+    {
+      "id": "aime_2025_2",
+      "type": "geometry",
+      "formalized": true,
+      "lean_code": "import Mathlib\n\nopen Real Complex Set\n\ntheorem area_of_triangle_ABD : \n  let BD := 7\n  let DC := 5\n  let inradius := 3\n  let area_ABD := (BD * inradius) / 2\n  area_ABD = 10.5 := by\n  norm_num",
+      "verified": false,
+      "errors": []
+    },
+    {
+      "id": "aime_2025_3",
+      "type": "number_theory",
+      "formalized": true,
+      "lean_code": "import Mathlib\n\nopen Real Complex Set\n\ntheorem gcd_condition_count : \u2203 k : \u2115, k = (2025 / 3) * (2025 / 5) * (2025 / 9) := by\n  let d := 2025\n  let g := gcd d (d + 1)\n  have h : gcd d (d + 1) = 1 := by\n    apply gcd_eq_one_of_coprime\n    linarith\n  have h1 : \u2200 n : \u2115, 1 \u2264 n \u2227 n \u2264 2025 \u2192 gcd n d = gcd (n + 1) d \u2192 n % 3 = 0 \u2228 n % 5 = 0 \u2228 n % 9 = 0 := by\n    intros n h2 h3\n    have h4 : gcd n d = gcd (n + 1) d := by\n      exact h3\n    -- Further analysis and counting logic goes here\n    sorry\n  -- Count the valid integers n\n  sorry",
+      "verified": false,
+      "errors": []
+    },
+    {
+      "id": "aime_2025_4",
+      "type": "geometry",
+      "formalized": true,
+      "lean_code": "import Mathlib\n\nopen Real Complex Set\n\ntheorem sphere_surface_area_in_tetrahedron : \n  let edge_length := 6 in\n  let radius := edge_length * (sqrt 6) / 12 in\n  let surface_area := 4 * \u03c0 * radius^2 in\n  surface_area = 4 * \u03c0 * (edge_length * (sqrt 6) / 12)^2 := by\n  norm_num",
+      "verified": false,
+      "errors": []
+    },
+    {
+      "id": "aime_2025_5",
+      "type": "number_theory",
+      "formalized": true,
+      "lean_code": "import Mathlib\n\nopen Nat\n\ntheorem count_cubes_difference : \n  \u2203 n : \u2115, n < 10000 \u2227 (\u2200 m : \u2115, m < n \u2192 \u2203 a b : \u2115, a^3 - b^3 = m) := by\n  let upper_bound := 10000\n  let count := (upper_bound - 1) / 6\n  have h : count < upper_bound := by linarith\n  use count\n  split; linarith\n  intros m hm\n  have : m < upper_bound := by linarith\n  use (m + 1)^(1/3), (m + 1)^(1/3) - 1\n  ring",
+      "verified": false,
+      "errors": []
+    }
+  ],
+  "stats": {
+    "total": 5,
+    "formalized": 5,
+    "verified": 0
+  }
+}

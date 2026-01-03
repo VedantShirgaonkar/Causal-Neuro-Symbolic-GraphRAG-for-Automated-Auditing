@@ -1,0 +1,178 @@
+{
+  "coverage_rate": 0.26666666666666666,
+  "graph_distractors": 4,
+  "synthetic_distractors": 11,
+  "unique_misconceptions": [
+    "misc_geometry_29511e0a",
+    "misc_geometry_fd184969",
+    "misc_combinatorics_057ffc57",
+    "misc_number_theory_ad9c24fb"
+  ],
+  "results": [
+    {
+      "id": "AIME_2025_1",
+      "topic": "Lattice Paths",
+      "correct_answer": "2100",
+      "distractors": [
+        {
+          "label": "B",
+          "content": "3000",
+          "misconception_id": "misc_combinatorics_057ffc57",
+          "misconception_source": "graph",
+          "diagnosis_text": "Student likely counted all possible paths from (0,0) to (10,10) without restricting to paths that pass through prime coordinate points.",
+          "related_concept": "Lattice Paths"
+        },
+        {
+          "label": "C",
+          "content": "1800",
+          "misconception_id": "synthetic_combinatorics_0",
+          "misconception_source": "synthetic",
+          "diagnosis_text": "Student likely overcounted the arrangements of steps by not properly accounting for the constraints of the paths that pass through the required prime coordinates.",
+          "related_concept": "Lattice Paths"
+        },
+        {
+          "label": "D",
+          "content": "1500",
+          "misconception_id": "synthetic_combinatorics_1",
+          "misconception_source": "synthetic",
+          "diagnosis_text": "Student likely forgot to apply the multiplication principle when calculating the number of paths between the prime coordinates.",
+          "related_concept": "Lattice Paths"
+        }
+      ],
+      "graph_count": 1,
+      "synthetic_count": 2
+    },
+    {
+      "id": "AIME_2025_2",
+      "topic": "Incircle Properties",
+      "correct_answer": "21",
+      "distractors": [
+        {
+          "label": "B",
+          "content": "30",
+          "misconception_id": "misc_geometry_fd184969",
+          "misconception_source": "graph",
+          "diagnosis_text": "Student likely used the formula for the area of a triangle incorrectly, perhaps calculating the area as base times height without dividing by 2.",
+          "related_concept": "Incircle Properties"
+        },
+        {
+          "label": "C",
+          "content": "18",
+          "misconception_id": "synthetic_geometry_0",
+          "misconception_source": "synthetic",
+          "diagnosis_text": "Student likely misapplied the area formula, possibly using the wrong dimensions or not considering the correct triangle configuration.",
+          "related_concept": "Incircle Properties"
+        },
+        {
+          "label": "D",
+          "content": "15",
+          "misconception_id": "synthetic_geometry_1",
+          "misconception_source": "synthetic",
+          "diagnosis_text": "Student likely forgot to account for the inradius in their calculations, leading to an underestimation of the area.",
+          "related_concept": "Incircle Properties"
+        }
+      ],
+      "graph_count": 1,
+      "synthetic_count": 2
+    },
+    {
+      "id": "AIME_2025_3",
+      "topic": "GCD Properties",
+      "correct_answer": "1080",
+      "distractors": [
+        {
+          "label": "B",
+          "content": "900",
+          "misconception_id": "misc_number_theory_ad9c24fb",
+          "misconception_source": "graph",
+          "diagnosis_text": "Student likely ignored the cases where gcd(n, 2025) = 1, leading to an undercount of valid integers.",
+          "related_concept": "GCD Properties"
+        },
+        {
+          "label": "C",
+          "content": "1350",
+          "misconception_id": "synthetic_number_theory_0",
+          "misconception_source": "synthetic",
+          "diagnosis_text": "Student likely simplified the GCD conditions incorrectly, possibly misunderstanding the relationship between n and n+1.",
+          "related_concept": "GCD Properties"
+        },
+        {
+          "label": "D",
+          "content": "720",
+          "misconception_id": "synthetic_number_theory_1",
+          "misconception_source": "synthetic",
+          "diagnosis_text": "Student likely did not consider the coprimality constraints properly, resulting in an incorrect count of integers.",
+          "related_concept": "GCD Properties"
+        }
+      ],
+      "graph_count": 1,
+      "synthetic_count": 2
+    },
+    {
+      "id": "AIME_2025_4",
+      "topic": "Inscribed Sphere",
+      "correct_answer": "8*pi",
+      "distractors": [
+        {
+          "label": "B",
+          "content": "24*pi",
+          "misconception_id": "misc_geometry_29511e0a",
+          "misconception_source": "graph",
+          "diagnosis_text": "Student likely used the diameter of the sphere instead of the radius when calculating the surface area.",
+          "related_concept": "Inscribed Sphere"
+        },
+        {
+          "label": "C",
+          "content": "36*pi",
+          "misconception_id": "synthetic_geometry_0",
+          "misconception_source": "synthetic",
+          "diagnosis_text": "Student likely misapplied the surface area formula, possibly confusing it with a different geometric shape.",
+          "related_concept": "Inscribed Sphere"
+        },
+        {
+          "label": "D",
+          "content": "4*pi",
+          "misconception_id": "synthetic_geometry_1",
+          "misconception_source": "synthetic",
+          "diagnosis_text": "Student likely forgot to account for the inradius in their calculations, leading to an incorrect surface area.",
+          "related_concept": "Inscribed Sphere"
+        }
+      ],
+      "graph_count": 1,
+      "synthetic_count": 2
+    },
+    {
+      "id": "AIME_2025_5",
+      "topic": "Cube Differences",
+      "correct_answer": "2667",
+      "distractors": [
+        {
+          "label": "B",
+          "content": "2000",
+          "misconception_id": "synthetic_number_theory_0",
+          "misconception_source": "synthetic",
+          "diagnosis_text": "Student likely simplified the GCD conditions incorrectly, leading to an undercount of valid differences.",
+          "related_concept": "Cube Differences"
+        },
+        {
+          "label": "C",
+          "content": "3000",
+          "misconception_id": "synthetic_number_theory_1",
+          "misconception_source": "synthetic",
+          "diagnosis_text": "Student likely did not consider the coprimality constraints, resulting in an overcount of possible differences.",
+          "related_concept": "Cube Differences"
+        },
+        {
+          "label": "D",
+          "content": "2666",
+          "misconception_id": "synthetic_number_theory_2",
+          "misconception_source": "synthetic",
+          "diagnosis_text": "Student likely made an off-by-one error in counting the integers that meet the divisibility criteria.",
+          "related_concept": "Cube Differences"
+        }
+      ],
+      "graph_count": 0,
+      "synthetic_count": 3
+    }
+  ]
+}
