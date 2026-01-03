@@ -203,15 +203,18 @@ MATHEMATEST/
 
 ## Citation
 
+If you use this architecture in your research, please cite:
+
+> Shirgaonkar, V. (2026). *Neuro-Symbolic GraphRAG for STEM Education*. GitHub. https://github.com/VedantShirgaonkar/Neuro-Symbolic-GraphRAG-for-STEM
+
 ```bibtex
-@software{mathematest2026,
-  author       = {Vedant Shirgaonkar},
-  title        = {MathemaTest: A Neuro-Symbolic GraphRAG System for STEM Education},
-  year         = {2026},
-  publisher    = {GitHub},
-  url          = {https://github.com/your-org/mathematest},
-  note         = {Research prototype integrating knowledge graphs with 
-                  Lean 4 theorem proving for verified STEM assessment}
+@software{NeuroGraphRAG2026,
+  author    = {Shirgaonkar, Vedant},
+  title     = {Neuro-Symbolic GraphRAG for STEM Education},
+  year      = {2026},
+  publisher = {GitHub},
+  journal   = {GitHub repository},
+  url       = {https://github.com/VedantShirgaonkar/Neuro-Symbolic-GraphRAG-for-STEM}
 }
 ```
 
