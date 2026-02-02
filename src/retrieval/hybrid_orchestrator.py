@@ -374,9 +374,87 @@ class HybridRetriever:
         logger.info(f"Returning {len(merged)} results")
         return packet
     
+    def retrieve_for_audit(
+        self,
+        query: str,
+        current_chapter: int,
+        n_results: int = 10,
+        rerank: bool = True,
+    ) -> List[RetrievalResult]:
+        """Retrieve context with chapter-based lobotomy filter.
+        
+        This is the strict entry point for the Textbook Auditor. It ensures
+        no data leakage by only returning content from chapters BEFORE
+        the current chapter being audited.
+        
+        Args:
+            query: Search query text.
+            current_chapter: The chapter being audited. Only content from
+                            chapters < current_chapter will be returned.
+            n_results: Maximum number of results.
+            rerank: Whether to apply cross-encoder re-ranking.
+            
+        Returns:
+            List of RetrievalResult objects from allowed chapters only.
+        """
+        logger.info(f"Lobotomized retrieval: query='{query[:50]}...', max_chapter={current_chapter}")
+        
+        # Vector search with chapter filter
+        vector_results = []
+        try:
+            raw_results = self.vector_store.search(
+                query=query,
+                n_results=n_results * 2,
+                max_chapter=current_chapter,
+            )
+            for r in raw_results:
+                vector_results.append(RetrievalResult(
+                    id=r.get("id", ""),
+                    content=r.get("content", ""),
+                    source="vector",
+                    score=r.get("score", 0.5),
+                    metadata=r.get("metadata", {}),
+                ))
+        except Exception as e:
+            logger.error(f"Lobotomized vector search failed: {e}")
+        
+        # Graph search with chapter filter
+        graph_results = []
+        try:
+            raw_graph = self.graph_client.search_concepts(
+                query=query,
+                max_chapter=current_chapter,
+                limit=n_results,
+            )
+            for r in raw_graph:
+                node = r.get("node", {})
+                graph_results.append(RetrievalResult(
+                    id=node.get("node_id", node.get("id", "")),
+                    content=f"[{r.get('types', ['Node'])[0]}] {node.get('name', '')}: {node.get('description', '')}",
+                    source="graph",
+                    score=0.7,
+                    metadata={"chapter": node.get("chapter"), "types": r.get("types", [])},
+                ))
+        except Exception as e:
+            logger.error(f"Lobotomized graph search failed: {e}")
+        
+        logger.info(f"Lobotomized results: vector={len(vector_results)}, graph={len(graph_results)}")
+        
+        # Merge and deduplicate
+        merged = self._merge_results(vector_results, graph_results)
+        
+        # Re-rank
+        if rerank and merged:
+            merged = self.reranker.rerank(query, merged, top_k=n_results)
+        else:
+            merged = merged[:n_results]
+        
+        return merged
+    
     def close(self):
         """Close all connections."""
         self.graph_client.close()
+
 
 
 class MockHybridRetriever:

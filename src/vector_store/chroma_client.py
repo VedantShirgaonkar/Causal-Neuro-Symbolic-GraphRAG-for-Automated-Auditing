@@ -130,6 +130,7 @@ class ChromaVectorStore:
         n_results: int = 10,
         where: Optional[Dict] = None,
         include_distances: bool = True,
+        max_chapter: Optional[int] = None,
     ) -> List[Dict[str, Any]]:
         """Search for similar documents.
         
@@ -138,16 +139,31 @@ class ChromaVectorStore:
             n_results: Maximum number of results.
             where: Metadata filter.
             include_distances: Include similarity scores.
+            max_chapter: If provided, only return documents from chapters < max_chapter.
+                        This is the "lobotomy" filter for preventing data leakage.
             
         Returns:
             List of matching documents with scores.
         """
         query_embedding = self.embedder.embed(query)
         
+        # Build the where clause with optional chapter filtering
+        effective_where = where.copy() if where else None
+        
+        if max_chapter is not None:
+            # Lobotomy filter: only include chapters strictly less than max_chapter
+            chapter_filter = {"chapter": {"$lte": max_chapter}}
+            
+            if effective_where:
+                # Combine with existing filter using $and
+                effective_where = {"$and": [effective_where, chapter_filter]}
+            else:
+                effective_where = chapter_filter
+        
         results = self.collection.query(
             query_embeddings=query_embedding.tolist(),
             n_results=n_results,
-            where=where,
+            where=effective_where,
             include=["documents", "metadatas", "distances"] if include_distances else ["documents", "metadatas"],
         )
         

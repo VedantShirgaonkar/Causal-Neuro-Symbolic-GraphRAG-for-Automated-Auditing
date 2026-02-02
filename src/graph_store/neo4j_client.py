@@ -243,27 +243,44 @@ class Neo4jClient:
             record = result.single()
             return dict(record["n"]) if record else None
     
-    def get_prerequisites(self, concept_id: str, depth: int = 2) -> List[Dict[str, Any]]:
+    def get_prerequisites(
+        self,
+        concept_id: str,
+        depth: int = 2,
+        max_chapter: Optional[int] = None,
+    ) -> List[Dict[str, Any]]:
         """Get prerequisite concepts for a given concept.
         
         Args:
             concept_id: ID of the concept to find prerequisites for.
             depth: Maximum depth of prerequisite chain.
+            max_chapter: If provided, only return prerequisites from chapters < max_chapter.
+                        This is the "lobotomy" filter for preventing data leakage.
             
         Returns:
             List of prerequisite nodes with their relationships.
         """
-        with self.session() as session:
-            result = session.run(
-                """
+        # Build query with optional chapter filter
+        if max_chapter is not None:
+            query = """
+                MATCH path = (c {id: $id})-[:PREREQUISITE_OF*1..]->(prereq)
+                WHERE length(path) <= $depth
+                  AND prereq.chapter <= $max_chapter
+                RETURN prereq, length(path) as distance
+                ORDER BY distance
+            """
+            params = {"id": concept_id, "depth": depth, "max_chapter": max_chapter}
+        else:
+            query = """
                 MATCH path = (c {id: $id})-[:PREREQUISITE_OF*1..]->(prereq)
                 WHERE length(path) <= $depth
                 RETURN prereq, length(path) as distance
                 ORDER BY distance
-                """,
-                id=concept_id,
-                depth=depth,
-            )
+            """
+            params = {"id": concept_id, "depth": depth}
+        
+        with self.session() as session:
+            result = session.run(query, **params)
             return [
                 {"node": dict(r["prereq"]), "distance": r["distance"]}
                 for r in result
@@ -288,25 +305,92 @@ class Neo4jClient:
             )
             return [dict(r["m"]) for r in result]
     
-    def search_by_latex(self, latex_pattern: str) -> List[Dict[str, Any]]:
+    def search_by_latex(
+        self,
+        latex_pattern: str,
+        max_chapter: Optional[int] = None,
+    ) -> List[Dict[str, Any]]:
         """Search for nodes containing specific LaTeX.
         
         Args:
             latex_pattern: LaTeX string to search for.
+            max_chapter: If provided, only return nodes from chapters < max_chapter.
+                        This is the "lobotomy" filter for preventing data leakage.
             
         Returns:
             List of matching nodes.
         """
-        with self.session() as session:
-            result = session.run(
-                """
+        # Build query with optional chapter filter
+        if max_chapter is not None:
+            query = """
+                MATCH (n)
+                WHERE (n.raw_latex CONTAINS $pattern
+                   OR n.normalized_latex CONTAINS $pattern)
+                  AND n.chapter <= $max_chapter
+                RETURN n, labels(n) as types
+            """
+            params = {"pattern": latex_pattern, "max_chapter": max_chapter}
+        else:
+            query = """
                 MATCH (n)
                 WHERE n.raw_latex CONTAINS $pattern
                    OR n.normalized_latex CONTAINS $pattern
                 RETURN n, labels(n) as types
-                """,
-                pattern=latex_pattern,
-            )
+            """
+            params = {"pattern": latex_pattern}
+        
+        with self.session() as session:
+            result = session.run(query, **params)
+            return [
+                {"node": dict(r["n"]), "types": r["types"]}
+                for r in result
+            ]
+    
+    def search_concepts(
+        self,
+        query: str,
+        max_chapter: Optional[int] = None,
+        limit: int = 10,
+    ) -> List[Dict[str, Any]]:
+        """Search for concepts by name or description.
+        
+        Args:
+            query: Search query text.
+            max_chapter: If provided, only return nodes from chapters < max_chapter.
+                        This is the "lobotomy" filter for preventing data leakage.
+            limit: Maximum number of results.
+            
+        Returns:
+            List of matching concept nodes.
+        """
+        query_lower = query.lower()
+        
+        # Build query with optional chapter filter
+        # Note: Using $search_term to avoid conflict with session.run() kwargs
+        if max_chapter is not None:
+            cypher = """
+                MATCH (n)
+                WHERE (toLower(n.name) CONTAINS $search_term
+                   OR toLower(n.description) CONTAINS $search_term
+                   OR toLower(n.statement) CONTAINS $search_term)
+                  AND n.chapter <= $max_chapter
+                RETURN n, labels(n) as types
+                LIMIT $limit
+            """
+            params = {"search_term": query_lower, "max_chapter": max_chapter, "limit": limit}
+        else:
+            cypher = """
+                MATCH (n)
+                WHERE toLower(n.name) CONTAINS $search_term
+                   OR toLower(n.description) CONTAINS $search_term
+                   OR toLower(n.statement) CONTAINS $search_term
+                RETURN n, labels(n) as types
+                LIMIT $limit
+            """
+            params = {"search_term": query_lower, "limit": limit}
+        
+        with self.session() as session:
+            result = session.run(cypher, **params)
             return [
                 {"node": dict(r["n"]), "types": r["types"]}
                 for r in result

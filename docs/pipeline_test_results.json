@@ -1,0 +1,38 @@
+{
+  "timestamp": "2026-01-16T15:49:27.937386",
+  "endpoint": "https://emmett-snoozy-yawnfully.ngrok-free.dev/v1",
+  "mode": "mock",
+  "target_chapter": 5,
+  "problems": 3,
+  "premises": 3,
+  "PASS": 0,
+  "FAIL_GAP": 2,
+  "FAIL_LOGIC": 0,
+  "total_time_ms": 70566,
+  "individual_results": [
+    {
+      "problem_index": 0,
+      "result": "FAIL_GAP",
+      "missing": [
+        "Calculus",
+        "Integration"
+      ],
+      "time_ms": 57223
+    },
+    {
+      "problem_index": 1,
+      "result": "FAIL_MODEL",
+      "missing": [],
+      "time_ms": 0
+    },
+    {
+      "problem_index": 2,
+      "result": "FAIL_GAP",
+      "missing": [
+        "Calculus",
+        "Integration"
+      ],
+      "time_ms": 13343
+    }
+  ]
+}

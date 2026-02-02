@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-01-16T11:08:42.425151",
+  "endpoint": "https://emmett-snoozy-yawnfully.ngrok-free.dev/v1",
+  "result": "FAIL_GAP",
+  "inference_time_ms": 8168,
+  "missing_prerequisites": [
+    "Integration",
+    "Calculus"
+  ],
+  "proof_sketch": "### Proof Sketch:\nThe problem requires calculating the work done by a variable force F(x) = 3*X^2 moving an object from x=0 to X. The student's knowledge base only includes constant-force formulas and dot products, but not integration or calculus concepts like integrals/derivatives (no limits). Thus:\n1.) Since the problem requires integrating a variable force over distance (`W = \u222bF(x)dx`), we cannot solve it with just this context. The student must fail because they lack prerequisite knowledge o",
+  "lean_code": ""
+}
