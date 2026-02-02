@@ -62,7 +62,7 @@ To demonstrate the failure of standard RAG, we analyzed **Theorem 1.2.3** (Veloc
 | Method | Retrieved Context | Model Response | Verdict |
 | :--- | :--- | :--- | :--- |
 | **Naive RAG** | **Definition 3.1** (Chapter 3) | *"YES. The theorem is valid because velocity is defined as the derivative (Def 3.1)..."* | ❌ **False Positive** (Hallucination) |
-| **MathemaTest** | *Empty / Ch 1 Only* | *"NO. The term 'derivative' has not been defined yet in the current context. This is a gap."* | ✅ **True Negative** (Gap Detected) |
+| **Our Framework** | *Empty / Ch 1 Only* | *"NO. The term 'derivative' has not been defined yet in the current context. This is a gap."* | ✅ **True Negative** (Gap Detected) |
 
 We term this phenomenon the **"RAG Lobotomy"**: Providing future context removes the model's ability to perceive the pedagogical structure, effectively "lobotomizing" its critical reasoning.
 
@@ -141,9 +141,9 @@ We argue that integrating specialized reasoning models like **DeepSeek-Prover-V1
 
 ```bibtex
 @inproceedings{mathematest2026,
-  title={Automated Auditing of Mathematical Curricula: A Causal Neuro-Symbolic Framework},
-  author={Shirgaonkar, Vedant and DeepMind Agentic Team},
-  booktitle={Proceedings of the International Conference on Learning Representations (ICLR)},
+  title={Automated Auditing of Mathematical Curricula via Causal Neuro-Symbolic GraphRAG},
+  author={Shirgaonkar, Vedant},
+  booktitle={N/A},
   year={2026}
 }
 ```
