@@ -3,66 +3,141 @@
 ![License](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)
 ![Python](https://img.shields.io/badge/Python-3.11-blue.svg)
 ![Neo4j](https://img.shields.io/badge/Neo4j-5.15-green.svg)
+![Status](https://img.shields.io/badge/Status-Research%20Preview-orange.svg)
 
-**MathemaTest** is a research framework for identifying "pedagogical gaps" (missing prerequisites) in mathematical textbooks using a novel **Causal GraphRAG** architecture. By enforcing strict temporal causality on retrieval—preventing the "Future Leakage" common in standard RAG—we enable Large Language Models to simulate the state of a linear learner, correctly flagging 47.9% of theorems in a standard Calculus corpus as having missing or forward-referencing definitions.
+**MathemaTest** is a research framework for identifying "pedagogical gaps" (missing prerequisites) in mathematical textbooks using a novel **Causal GraphRAG** architecture. By enforcing strict temporal causality on retrieval—preventing the "Future Leakage" common in standard RAG—we enable Large Language Models to simulate the state of a linear learner.
 
-This repository contains the source code, experimental data, and technical specifications for the paper:  
-**"Automated Auditing of Mathematical Curricula: A Causal Neuro-Symbolic Framework with Formal Verification"**.
+Our system was evaluated on the *OpenStax Calculus Vol 1* corpus, where it correctly flagged **47.9%** of theorems as having missing or forward-referencing definitions, a capability that standard "Naive RAG" masks (93.3% Failure Rate) due to hallucinated validity.
+
+This repository contains the source code, dataset, and formal verification findings for the paper:  
+**"Automated Auditing of Mathematical Curricula: A Causal Neuro-Symbolic Framework with Formal Verification"** (ICLR 2026 Submission).
 
 ---
 
-## 🏛️ Architecture
+## 🏛️ Architecture & Methodology
 
 Our system integrates a Semantic Knowledge Graph (Neo4j) with a Causal Controller that filters Vector Search (ChromaDB) results based on curriculum metadata.
 
 ![Architecture Diagram](assets_readme/architecture_diagram.png)
 
-### Key Components
-1.  **Ingestion Pipeline:** Hierarchical chunking of XML/HTML textbook source into `Theorem`, `Definition`, and `Proof` nodes.
-2.  **Causal Controller:** A logic layer that intercepts RAG retrieval to block any context $D$ where $Chapter(D) > Chapter(Query)$.
-3.  **Neuro-Symbolic Verifier:** A two-stage evaluation engine:
-    *   **Semantic Check:** LLM-based consistency verification (GPT-4o).
-    *   **Syntactic Check:** Auto-formalization attempting to compile Lean 4 code.
+### 1. The Causal Controller (Hybrid Retrieval)
+Unlike standard RAG, which retrieves the most semantically similar context regardless of its position in the text, MathemaTest implements a **Causal Filter**.
+
+**Algorithm:**
+Given a query theorem $T$ located in Chapter $C_{query}$:
+1.  **Vector Retrieval:** Fetch Top-K candidates $\{D_1, ..., D_K\}$ from ChromaDB.
+2.  **Temporal Filtering:** Discard any document $D_i$ where:
+    $$ D_i.chapter\_index > C_{query} $$ 
+    This prevents the model from "cheating" by peeking at future definitions (e.g., using Chapter 3's *Derivative* definition to validate a Chapter 1 theorem).
+3.  **Graph Traversal:** Traverse `DEPENDS_ON` edges in Neo4j to gather explicit historical dependencies.
+
+### 2. The Neuro-Symbolic Bridge
+We employ a two-stage verification pipeline to audit each theorem:
+*   **Semantic Verification (LLM):** Checks consistency using Causal GraphRAG.
+*   **Syntactic Verification (Lean 4):** Attempts to auto-formalize the theorem into verifiable code.
+    *   *Prompt Strategy:* Few-shot Chain-of-Thought targeting `Mathlib` imports.
+    *   *Constraint:* "If a definition is missing from the provided context, you must DECLARE it as a hypothesis, do not hallucinate a library import."
+
+---
+
+## 📚 Dataset: OpenStax Calculus
+
+The system was audited on the industry-standard *OpenStax Calculus Volume 1* textbook.
+
+| Metric | Count | Description |
+| :--- | :--- | :--- |
+| **Total Audit Scope** | **503 Items** | Theorems, Lemmas, and Definitions |
+| **Chapters** | 1-6 | Functions, Limits, Derivatives, Integration |
+| **Graph Nodes** | ~4,120 | Total semantic clusters in Neo4j |
+| **Graph Density** | 3.02 | Edges per node (Sparse Dependency Graph) |
+
+---
+
+## 🔬 Case Study: The "RAG Lobotomy"
+
+To demonstrate the failure of standard RAG, we analyzed **Theorem 1.2.3** (Velocity), which intuitively references "Derivatives" in Chapter 1, despite the formal definition appearing in Chapter 3.
+
+**The Query:** *"Is the theorem about instantaneous velocity valid?"*
+
+| Method | Retrieved Context | Model Response | Verdict |
+| :--- | :--- | :--- | :--- |
+| **Naive RAG** | **Definition 3.1** (Chapter 3) | *"YES. The theorem is valid because velocity is defined as the derivative (Def 3.1)..."* | ❌ **False Positive** (Hallucination) |
+| **MathemaTest** | *Empty / Ch 1 Only* | *"NO. The term 'derivative' has not been defined yet in the current context. This is a gap."* | ✅ **True Negative** (Gap Detected) |
+
+We term this phenomenon the **"RAG Lobotomy"**: Providing future context removes the model's ability to perceive the pedagogical structure, effectively "lobotomizing" its critical reasoning.
 
 ---
 
 ## 📊 Evaluation & Results
 
-We benchmarked **GPT-4o-mini**, **Llama-3.3-70B**, and our **Causal GraphRAG** on a dataset of 30 verified pedagogical gaps.
-
-### 1. The "RAG Lobotomy" Effect
-Standard RAG systems fail to detect gaps because they retrieve "answers" from future chapters, effectively "lobotomizing" the model's ability to see the curriculum processing error. Our system maintains the gap detection capability while providing valid local context.
+### 1. The Lobotomy Benchmark (n=30 Verified Gaps)
+We sampled 30 items with known pedagogical gaps. Standard RAG (Red) almost entirely masks these gaps, while MathemaTest (Green) recovers the baseline skepticism of the Raw model.
 
 ![RAG Lobotomy Benchmark](assets_readme/rag_lobotomy_benchmark.png)
 
-### 2. The Neuro-Symbolic Gap (Global Audit)
-Running the system on the full *OpenStax Calculus Vol 1* corpus (N=503) revealed a stark contrast between Semantic success and Formal verifiability.
+### 2. The Neuro-Symbolic Gap (Global Audit n=503)
+Running the system on the full corpus revealed a massive capability gap between **Semantic Logic** (LLM reasoning) and **Syntactic Formalization** (Code generation).
 
 ![Neuro-Symbolic Gap Funnel](assets_readme/neurosymbolic_gap_funnel.png)
 
 | System Stage | Count (n) | Success Rate | Interpretation |
 | :--- | :--- | :--- | :--- |
-| **Total Theorems** | 503 | 100% | Full Audit Scope |
-| **Logically Consistent** | 262 | 52.1% | Verified by Semantic LLM |
-| **Pedagogical Gaps** | 241 | 47.9% | Correctly identified as Missing Prerequisites |
-| **Formally Verified** | **0** | **0.0%** | **Current SOTA Failure** |
+| **Total Items** | 503 | 100% | Full Corpus |
+| **Logically Consistent** | 262 | 52.1% | Verified by GPT-4o Semantic Check |
+| **Pedagogical Gaps** | 241 | 47.9% | Missing Prerequisites / Forward References |
+| **Formally Verified** | **0** | **0.0%** | **No Theorem Compiled Successfully** |
 
 ### 3. Pedagogical Heatmap
-Mapping verifiability across the curriculum shows high gap density in **Chapter 1 (Functions)**, driven by implicit reliance on Set Theory and Real Analysis concepts not formally introduced until later.
+The "Gap Density" is highest in **Chapter 1 (Functions)**, confirming that early chapters rely heavily on intuition (Real Analysis concepts) that are not rigorously defined until later.
 
 ![Pedagogical Heatmap](assets_readme/pedagogical_heatmap.png)
 
 ---
 
 ## 🚀 Future Work: DeepSeek-Prover
-The **0% Formal Verification** rate highlights the limitation of general-purpose LLMs (GPT-4o) in generating valid Lean 4 proofs for textbook mathematics without human-in-the-loop refinement. 
-The projected potential (dotted bar in Fig 2) represents the target performance using specialized reasoning models like **DeepSeek-Prover-V1.5**, which we aim to integrate in Phase 4 to bridge the semantic-syntactic gap.
+The **0% Formal Verification** rate is a critical finding. It highlights that general-purpose models (GPT-4o) cannot bridge the gap to formal verification without extensive human-in-the-loop annotations. 
+We argue that integrating specialized reasoning models like **DeepSeek-Prover-V1.5** (projected impact shown in Fig 2) is the necessary next step to achieve autonomous formalization of textbook mathematics.
+
+---
+
+## 🛠️ Usage
+
+### Prerequisites
+*   Python 3.11+
+*   Neo4j Database (AuraDB or Local)
+*   OpenAI API Key
+
+### Installation
+1.  **Clone & Install:**
+    ```bash
+    git clone https://github.com/VedantShirgaonkar/MathemaTest.git
+    cd MathemaTest
+    pip install -r requirements.txt
+    ```
+
+2.  **Configuration:**
+    Create a `.env` file:
+    ```bash
+    NEO4J_URI=bolt://localhost:7687
+    NEO4J_PASSWORD=your_password
+    OPENAI_API_KEY=sk-...
+    ```
+
+3.  **Run the Audit:**
+    ```bash
+    # Run the full Causal Audit on the Textbook
+    python scripts/run_textbook_audit.py
+    ```
+
+4.  **Reproduce Plots:**
+    ```bash
+    # Generate the Figures from the paper
+    python scripts/generate_finale_plots.py
+    ```
 
 ---
 
 ## 📚 Citation
-
-If you use this dataset or code, please cite our work:
 
 ```bibtex
 @inproceedings{mathematest2026,
@@ -72,22 +147,3 @@ If you use this dataset or code, please cite our work:
   year={2026}
 }
 ```
-
----
-
-## 🛠️ Usage
-
-1. **Install Dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-2. **Setup Environment:**
-   Configure `.env` with `NEO4J_URI`, `OPENAI_API_KEY`, etc.
-3. **Run Audit:**
-   ```bash
-   python scripts/run_textbook_audit.py
-   ```
-4. **Generate Plots:**
-   ```bash
-   python scripts/generate_finale_plots.py
-   ```
