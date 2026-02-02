@@ -1,4 +1,4 @@
-#Automated Auditing of Mathematical Curricula via Causal Neuro-Symbolic GraphRAG
+# Automated Auditing of Mathematical Curricula via Causal Neuro-Symbolic GraphRAG
 
 ![License](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)
 ![Python](https://img.shields.io/badge/Python-3.11-blue.svg)
